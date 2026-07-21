@@ -4,8 +4,8 @@ const multiply = (a: number, b: number): number => {
 
 console.log(multiply(5, 4));
 
-const greet = (name: string): void => {
+const greetUser = (name: string): void => {
     console.log("Hello " + name);
 };
 
-greet("Susmitha");
+greetUser("Susmitha");
