@@ -5,8 +5,12 @@
     "tsx": "^4.23.7"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^18.0.4",
     "ejs": "^6.0.1",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "mongoose": "^9.10.2"
   },
   "name": "typescript-demo",
   "version": "1.0.0",

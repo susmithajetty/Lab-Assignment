@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Management</title>
+</head>
+
+<body>
+
+    <h1>Student Management System</h1>
+
+    <h2>Add Student</h2>
+
+    <input type="text" id="name" placeholder="Name">
+    <input type="number" id="age" placeholder="Age">
+    <input type="text" id="branch" placeholder="Branch">
+
+    <button onclick="addStudent()">Add Student</button>
+
+    <h2>Students</h2>
+
+    <button onclick="getStudents()">View Students</button>
+
+    <div id="students"></div>
+
+
+    <script>
+
+        // GET
+        async function getStudents() {
+
+            const response = await fetch("/api/students");
+            const students = await response.json();
+
+            let output = "";
+
+            students.forEach(student => {
+
+                output += `
+                    <div>
+                        <p>
+                            <b>Name:</b> ${student.name}
+                            <br>
+                            <b>Age:</b> ${student.age}
+                            <br>
+                            <b>Branch:</b> ${student.branch}
+                            <br>
+                            <button onclick="deleteStudent('${student._id}')">
+                                Delete
+                            </button>
+                        </p>
+                        <hr>
+                    </div>
+                `;
+
+            });
+
+            document.getElementById("students").innerHTML = output;
+        }
+
+
+        // POST
+        async function addStudent() {
+
+            const name = document.getElementById("name").value;
+            const age = document.getElementById("age").value;
+            const branch = document.getElementById("branch").value;
+
+            const response = await fetch("/api/students", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    name: name,
+                    age: age,
+                    branch: branch
+                })
+
+            });
+
+            const data = await response.json();
+
+            alert("Student added successfully");
+
+            document.getElementById("name").value = "";
+            document.getElementById("age").value = "";
+            document.getElementById("branch").value = "";
+
+            getStudents();
+        }
+
+
+        // DELETE
+        async function deleteStudent(id) {
+
+            await fetch(`/api/students/${id}`, {
+
+                method: "DELETE"
+
+            });
+
+            alert("Student deleted successfully");
+
+            getStudents();
+        }
+
+    </script>
+
+</body>
+</html>
